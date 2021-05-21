@@ -6,7 +6,6 @@
 82.156.115.176  root Ss8866@123 22 root 123456 3308 测试库8.0 Linux
 
 #82.156.115.176 root 123456 3306 测试库5.7 Linux
-#82.156.115.176 root 123456 3308 测试库8.0 Linux
-
+#82.156.115.176 root 123456 3308 测试库8.0 RDS
 
 192.168.238.172 administrator Hzmc321# 22 root Abcd321# 3307 windows测试环境 Windows
