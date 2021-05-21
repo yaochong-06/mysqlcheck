@@ -565,7 +565,7 @@ def get_info_55_56(server_id, server_user, server_password, server_port, mysql_u
                           "log_err2_56")
     else:
         log_err = get_one(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port,
-                          "log_err1_56")
+                          "log_err2_56")
 
 
     if log_err != 'NULL':
@@ -1101,7 +1101,7 @@ def get_info_55_56_local(server_id, mysql_user, mysql_password, mysql_port, plat
     if check_log == './':
         log_err = get_one_local(server_id, mysql_user, mysql_password, mysql_port, "log_err2_56")
     else:
-        log_err = get_one_local(server_id, mysql_user, mysql_password, mysql_port, "log_err1_56")
+        log_err = get_one_local(server_id, mysql_user, mysql_password, mysql_port, "log_err2_56")
 
     if log_err != 'NULL':
         date_time = time.strftime("%Y-%m-%d", time.localtime(time.time() - 60 * 60 * 24 * 30))
