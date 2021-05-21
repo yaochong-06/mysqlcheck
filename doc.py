@@ -143,7 +143,7 @@ def get_mysql_doc_remote_linux(company_name, engineer_name, customer_name, custo
                }
 
     tpl.render(context)
-    tpl.save(f'./{server_id}:{mysql_port}-{business_name}.docx')
+    tpl.save(f'./{server_id}-{mysql_port}-{business_name}.docx')
 
 
 def get_mysql_doc_remote_win(company_name, engineer_name, customer_name, customer_name2, server_id, server_user,
@@ -259,7 +259,7 @@ def get_mysql_doc_remote_win(company_name, engineer_name, customer_name, custome
                }
 
     tpl.render(context)
-    tpl.save(f'./{server_id}:{mysql_port}-{business_name}.docx')
+    tpl.save(f'./{server_id}-{mysql_port}-{business_name}.docx')
 
 
 def get_mysql_doc_local_linux(company_name, engineer_name, customer_name, customer_name2, server_id, mysql_user,
@@ -378,7 +378,7 @@ def get_mysql_doc_local_linux(company_name, engineer_name, customer_name, custom
                }
 
     tpl.render(context)
-    tpl.save(f'./{server_id}:{mysql_port}-{business_name}.docx')
+    tpl.save(f'./{server_id}-{mysql_port}-{business_name}.docx')
 
 
 """
@@ -506,4 +506,4 @@ def get_mysql_doc_local_win(company_name, engineer_name, customer_name, customer
                }
 
     tpl.render(context)
-    tpl.save(f'./{server_id}:{mysql_port}-{business_name}.docx')
+    tpl.save(f'./{server_id}-{mysql_port}-{business_name}.docx')
