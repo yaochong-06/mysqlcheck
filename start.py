@@ -64,7 +64,7 @@ def main():
             customer_name = input("请输入客户第一对接人姓名:")
             print("客户第一对接人姓名:", customer_name)
             flag_customer_name = input("确认选择1/重新输入选择2:")
-        while flag_customer_name == '2':
+        while customer_name2 == '' or flag_customer_name2 == '2':
             customer_name2 = input("请输入客户第二对接人姓名，没有请回车：")
             print("客户第二对接人姓名:", customer_name2)
             flag_customer_name2 = input("确认选择1/重新输入选择2:")
