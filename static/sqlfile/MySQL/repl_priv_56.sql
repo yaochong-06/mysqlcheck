@@ -1,0 +1,1 @@
+select user,host,Grant_priv,password_expired from mysql.user where Repl_slave_priv='Y' and Repl_client_priv='Y';

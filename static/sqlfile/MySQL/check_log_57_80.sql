@@ -1,0 +1,1 @@
+select substring(VARIABLE_VALUE,1,2) as err_log_path from performance_schema.global_variables where variable_name='LOG_ERROR';

@@ -1,0 +1,1 @@
+select VARIABLE_VALUE from information_schema.global_variables where variable_name='LOG_ERROR';

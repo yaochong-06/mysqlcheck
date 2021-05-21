@@ -1,0 +1,1 @@
+select Variable_Value from performance_schema.global_variables where Variable_name in ('log_bin');

@@ -1,0 +1,1 @@
+select user,host,password,password_expired from mysql.user where user='' or host='' or host='%' or password='' ;

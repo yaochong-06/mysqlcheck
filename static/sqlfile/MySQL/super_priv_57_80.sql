@@ -1,0 +1,1 @@
+select user,host,Grant_priv,password_expired,account_locked from mysql.user where Super_priv='Y';
