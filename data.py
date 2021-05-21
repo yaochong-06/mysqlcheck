@@ -480,6 +480,7 @@ def get_info_55_56(server_id, server_user, server_password, server_port, mysql_u
     # 4.2
     redo_log = get_all(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port,
                        "redo_log_56")
+
     # 4.3
     general_log = get_all(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port,
                           "general_log_56")
@@ -496,7 +497,7 @@ def get_info_55_56(server_id, server_user, server_password, server_port, mysql_u
     priv_res = get_user_priv(server_id, server_user, server_password, server_port, mysql_user, mysql_password,
                              mysql_port,
                              """SELECT DISTINCT CONCAT('show grants for ''',user,'''@''',host,''';') AS query FROM mysql.user 
-                             where user not in ('mysql.sys','mysql.session');""")
+                             where user not in ('mysql.sys','mysql.session') and host <> '';""")
 
     for i in priv_res:
         user_grant_privs.append(
@@ -519,6 +520,8 @@ def get_info_55_56(server_id, server_user, server_password, server_port, mysql_u
     # 权限管理
     all_priv = get_all(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port,
                        "all_priv_56")
+
+
     all_priv = [('用户名', '访问终端', '权限可传递', '密码过期')] + all_priv
 
     super_priv = get_all(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port,
@@ -551,16 +554,20 @@ def get_info_55_56(server_id, server_user, server_password, server_port, mysql_u
     repl_status = get_mysql_result(server_id, server_user, server_password, server_port, mysql_user, mysql_password,
                                    mysql_port, "repl_status_56")
 
+
     # 数据库错误日志检查
 
     check_log = get_one(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port,
                         "check_log_56")
-    if check_log != './':
-        log_err = get_one(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port,
-                          "log_err1_56")
-    else:
+
+    if check_log == './':
         log_err = get_one(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port,
                           "log_err2_56")
+    else:
+        log_err = get_one(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port,
+                          "log_err1_56")
+
+
     if log_err != 'NULL':
         date_time = time.strftime("%Y-%m-%d", time.localtime(time.time() - 60 * 60 * 24 * 30))
         row_num = command(server_id, server_user, server_password, server_port,
@@ -785,7 +792,7 @@ def get_info_57_80(server_id, server_user, server_password, server_port, mysql_u
     priv_res = get_user_priv(server_id, server_user, server_password, server_port, mysql_user, mysql_password,
                              mysql_port,
                              """SELECT DISTINCT CONCAT('show grants for ''',user,'''@''',host,''';') AS query FROM mysql.user
-                             where user not in ('mysql.sys','mysql.session');""")
+                             where user not in ('mysql.sys','mysql.session') and host <> '';""")
     for i in priv_res:
         user_grant_privs.append(
             get_user_priv(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port,
@@ -843,12 +850,13 @@ def get_info_57_80(server_id, server_user, server_password, server_port, mysql_u
     # 数据库错误日志检查
     check_log = get_one(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port,
                         "check_log_57_80")
-    if check_log != './':
-        log_err = get_one(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port,
-                          "log_err1_57_80")
-    else:
+    if check_log == './':
         log_err = get_one(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port,
                           "log_err2_57_80")
+    else:
+        log_err = get_one(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port,
+                          "log_err1_57_80")
+
     if log_err != 'NULL':
         date_time = time.strftime("%Y-%m-%d", time.localtime(time.time() - 60 * 60 * 24 * 30))
         row_num = command(server_id, server_user, server_password, server_port,
@@ -860,6 +868,7 @@ def get_info_57_80(server_id, server_user, server_password, server_port, mysql_u
             row_num = row_num
             err = command(server_id, server_user, server_password, server_port,
                           "tail -n +%s  %s|grep 'ERROR'" % (log_err, row_num)).split('\n')
+
         if err == ['']:
             err = ['最近数据库无报错。']
     else:
@@ -867,11 +876,6 @@ def get_info_57_80(server_id, server_user, server_password, server_port, mysql_u
     return info_mysql, lang_set, mysql_role, sessions, memory_set, net_set, get_dirs, get_db_dirs, binlog, bin_dir, bin_set, bin_cache, \
            redolog, redo_set, redo_size, undofile, null_user, bin_log, redo_log, general_log, slow_log, \
            user_grant_privs, all_priv, super_priv, repl_priv, big_tables, big_index, have_no_primary_key, gather_info, repl_setting, repl_status, err, log_err, share_set, tablespace_info
-
-
-"""
-local
-"""
 
 
 def get_info_55_56_local(server_id, mysql_user, mysql_password, mysql_port, platform):
@@ -1047,7 +1051,8 @@ def get_info_55_56_local(server_id, mysql_user, mysql_password, mysql_port, plat
     # 6.1 用户权限
     user_grant_privs = []
     priv_res = get_user_priv_local(server_id, mysql_user, mysql_password, mysql_port,
-                                   """SELECT DISTINCT CONCAT('show grants for ''',user,'''@''',host,''';') AS query FROM mysql.user;""")
+                                   """SELECT DISTINCT CONCAT('show grants for ''',user,'''@''',host,''';') AS query FROM mysql.user
+                                   where user not in ('mysql.sys','mysql.session') and host <> '';""")
 
     for i in priv_res:
         user_grant_privs.append(get_user_priv_local(server_id, mysql_user, mysql_password, mysql_port, list(i)[0]))
@@ -1093,10 +1098,11 @@ def get_info_55_56_local(server_id, mysql_user, mysql_password, mysql_port, plat
     # 数据库错误日志检查
 
     check_log = get_one_local(server_id, mysql_user, mysql_password, mysql_port, "check_log_56")
-    if check_log != './':
-        log_err = get_one_local(server_id, mysql_user, mysql_password, mysql_port, "log_err1_56")
-    else:
+    if check_log == './':
         log_err = get_one_local(server_id, mysql_user, mysql_password, mysql_port, "log_err2_56")
+    else:
+        log_err = get_one_local(server_id, mysql_user, mysql_password, mysql_port, "log_err1_56")
+
     if log_err != 'NULL':
         date_time = time.strftime("%Y-%m-%d", time.localtime(time.time() - 60 * 60 * 24 * 30))
         row_num = command_local("cat -n %s|grep -w '%s'|head -n 1|awk '{print $1}'" % (log_err, date_time)).split('\n')[
@@ -1290,7 +1296,8 @@ def get_info_57_80_local(server_id, mysql_user, mysql_password, mysql_port, plat
     # 6.1 用户权限
     user_grant_privs = []
     priv_res = get_user_priv_local(server_id, mysql_user, mysql_password, mysql_port,
-                                   """SELECT DISTINCT CONCAT('show grants for ''',user,'''@''',host,''';') AS query FROM mysql.user;""")
+                                   """SELECT DISTINCT CONCAT('show grants for ''',user,'''@''',host,''';') AS query FROM mysql.user 
+                                   where user not in ('mysql.sys','mysql.session') and host <> '';""")
     for i in priv_res:
         user_grant_privs.append(get_user_priv_local(server_id, mysql_user, mysql_password, mysql_port, list(i)[0]))
 
@@ -1335,10 +1342,10 @@ def get_info_57_80_local(server_id, mysql_user, mysql_password, mysql_port, plat
 
     # 数据库错误日志检查
     check_log = get_one_local(server_id, mysql_user, mysql_password, mysql_port, "check_log_57_80")
-    if check_log != './':
-        log_err = get_one_local(server_id, mysql_user, mysql_password, mysql_port, "log_err1_57_80")
-    else:
+    if check_log == './':
         log_err = get_one_local(server_id, mysql_user, mysql_password, mysql_port, "log_err2_57_80")
+    else:
+        log_err = get_one_local(server_id, mysql_user, mysql_password, mysql_port, "log_err1_57_80")
     if log_err != 'NULL':
         date_time = time.strftime("%Y-%m-%d", time.localtime(time.time() - 60 * 60 * 24 * 30))
         row_num = command_local("cat -n %s|grep -w '%s'|head -n 1|awk '{print $1}'" % (log_err, date_time)).split('\n')[

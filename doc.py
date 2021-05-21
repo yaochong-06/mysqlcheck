@@ -28,13 +28,13 @@ def get_mysql_doc_remote_linux(company_name, engineer_name, customer_name, custo
     print(f"正在巡检{business_name}系统, 请耐心等待...")
 
     version = get_one(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port, "version")
-    if version[0:3] in ['5.5', '5.6']:
+    if version[0:3] in ['5.5', '5.6', '10.']:
         info_mysql, lang_set, mysql_role, sessions, memory_set, net_set, get_dirs, get_db_dirs, binlog, bin_dir, bin_set, bin_cache, \
         redolog, redo_set, redo_size, undofile, null_user, bin_log, redo_log, general_log, slow_log, \
         user_grant_privs, all_priv, super_priv, repl_priv, big_tables, big_index, have_no_primary_key, gather_info, repl_setting, repl_status, err, log_err, \
         share_set, tablespace_info = get_info_55_56(server_id, server_user, server_password, server_port, mysql_user,
                                                     mysql_password, mysql_port, platform)
-    elif version[0:3] in ['5.7', '8.0', '10.']:
+    elif version[0:3] in ['5.7', '8.0']:
         info_mysql, lang_set, mysql_role, sessions, memory_set, net_set, get_dirs, get_db_dirs, binlog, bin_dir, bin_set, bin_cache, \
         redolog, redo_set, redo_size, undofile, null_user, bin_log, redo_log, general_log, slow_log, \
         user_grant_privs, all_priv, super_priv, repl_priv, big_tables, big_index, have_no_primary_key, gather_info, repl_setting, repl_status, err, log_err, \
