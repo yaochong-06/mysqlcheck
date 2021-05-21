@@ -46,6 +46,7 @@ def main():
     company_name = ''
     engineer_name = ''
     customer_name = ''
+    customer_name2 = ''
     flag_company_name = '2'
     flag_engineer_name = '2'
     flag_customer_name = '2'
