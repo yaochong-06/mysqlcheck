@@ -5,7 +5,8 @@
 # @FileName: start.py
 # @Software: PyCharm
 # @Blog    ：https://github.com/yaochong-06/ ; http://blog.itpub.net/29990276
-from doc import get_mysql_doc_remote_linux, get_mysql_doc_remote_win, get_mysql_doc_local_linux, get_mysql_doc_local_win
+from doc import get_mysql_doc_remote_linux, get_mysql_doc_remote_win, get_mysql_doc_local_linux, \
+    get_mysql_doc_local_win, get_mysql_doc_remote_rds
 from datetime import datetime
 from data import command, command_local
 
@@ -30,8 +31,13 @@ def get_server_info(company_name, engineer_name, customer_name, customer_name2):
                 get_mysql_doc_remote_win(company_name, engineer_name, customer_name, customer_name2, info_list[0],
                                          info_list[1], info_list[2], info_list[3], info_list[4], info_list[5],
                                          info_list[6], info_list[7] ,info_list[8])
+            # RDS巡检
+            elif len(info_list) == 9 and info_list[8] == 'RDS':
+                get_mysql_doc_remote_rds(company_name, engineer_name, customer_name, customer_name2, info_list[0],
+                                         info_list[1], info_list[2], info_list[3], info_list[4], info_list[5],
+                                         info_list[6], info_list[7], info_list[8])
             # Linux平台本地
-            elif len(info_list) == 6 and info_list[5] == 'Linux' > 0:
+            elif len(info_list) == 6 and info_list[5] == 'Linux':
                 get_mysql_doc_local_linux(company_name, engineer_name, customer_name, customer_name2, info_list[0],
                                           info_list[1], info_list[2], info_list[3], info_list[4], info_list[5])
             # windows本地

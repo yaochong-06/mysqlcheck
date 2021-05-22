@@ -16,9 +16,6 @@ import time
 current_time = time.strftime('%Y-%m-%d %H:%M:%S')
 check_time = time.strftime('%Y-%m-%d')
 
-'''
-传入所有的变量
-'''
 
 
 def get_mysql_doc_remote_linux(company_name, engineer_name, customer_name, customer_name2, server_id, server_user,
@@ -95,6 +92,89 @@ def get_mysql_doc_remote_linux(company_name, engineer_name, customer_name, custo
                # 1.4 系统磁盘空间使用
                'space_param': space_param,
 
+               # 1.5 数据库基本配置
+               'version': version,
+               'mysql_role': mysql_role,
+               'info_mysql': info_mysql,
+               # 1.6 数据库字符串信息
+               'lang_set': lang_set,
+               # 2.1 数据库资源
+               'sessions': sessions,
+               # 2.2 数据库内存参数设置
+               'memory_set': memory_set,
+               # 2.3数据库网络参数
+               'net_set': net_set,
+
+               'get_dirs': get_dirs,
+               'get_db_dirs': get_db_dirs,
+               'binlog': binlog,
+               'bin_dir': bin_dir,
+               'bin_set': bin_set,
+               'bin_cache': bin_cache,
+               # 3.5
+               'redolog': redolog,
+               'redo_set': redo_set,
+               'redo_size': redo_size,
+               # 3.6 undo文件设置
+               'undofile': undofile,
+               'null_user': null_user,
+               # 4.1 binlog
+               'bin_log': bin_log,
+               'redo_log': redo_log,
+               'general_log': general_log,
+               'slow_log': slow_log,
+               'user_grant_privs': user_grant_privs,
+               'all_priv': all_priv,
+               'super_priv': super_priv,
+               'repl_priv': repl_priv,
+               'big_tables': big_tables,
+               'big_index': big_index,
+               'have_no_primary_key': have_no_primary_key,
+               'gather_info': gather_info,
+               'repl_setting': repl_setting,
+               'repl_status': repl_status,
+               'err': err,
+               'log_err': log_err,
+               'share_set': share_set,
+               'tablespace_info': tablespace_info,
+               }
+
+    tpl.render(context)
+    tpl.save(f'./{server_id}-{mysql_port}-{business_name}.docx')
+
+def get_mysql_doc_remote_rds(company_name, engineer_name, customer_name, customer_name2, server_id, server_user,
+                               server_password, server_port, mysql_user, mysql_password, mysql_port, business_name, platform):
+    tpl = DocxTemplate('static/tpl/MC_MySQLRDS_tpl.docx')
+
+    print(f"正在巡检{business_name}系统, 请耐心等待...")
+
+    version = get_one(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port, "version")
+    if version[0:3] in ['5.5', '5.6', '10.']:
+        info_mysql, lang_set, mysql_role, sessions, memory_set, net_set, get_dirs, get_db_dirs, binlog, bin_dir, bin_set, bin_cache, \
+        redolog, redo_set, redo_size, undofile, null_user, bin_log, redo_log, general_log, slow_log, \
+        user_grant_privs, all_priv, super_priv, repl_priv, big_tables, big_index, have_no_primary_key, gather_info, repl_setting, repl_status, err, log_err, \
+        share_set, tablespace_info = get_info_55_56(server_id, server_user, server_password, server_port, mysql_user,
+                                                    mysql_password, mysql_port, platform)
+    elif version[0:3] in ['5.7', '8.0']:
+        info_mysql, lang_set, mysql_role, sessions, memory_set, net_set, get_dirs, get_db_dirs, binlog, bin_dir, bin_set, bin_cache, \
+        redolog, redo_set, redo_size, undofile, null_user, bin_log, redo_log, general_log, slow_log, \
+        user_grant_privs, all_priv, super_priv, repl_priv, big_tables, big_index, have_no_primary_key, gather_info, repl_setting, repl_status, err, log_err, \
+        share_set, tablespace_info = get_info_57_80(server_id, server_user, server_password, server_port, mysql_user,
+                                                    mysql_password, mysql_port, platform)
+    else:
+        print("The version is not support.")
+
+    context = {'company_name': company_name,
+               'engineer_name': engineer_name,
+               'business_name': business_name,
+               'c_name': customer_name,
+               'c_name2': customer_name2,
+               'check_time': check_time,
+               # 1.1 系统基础信息
+               'release': remove_last_line(
+                   login_ssh(server_id, server_user, server_password, server_port, 'cat /etc/redhat-release')),
+               'hostname': remove_last_line(
+                   login_ssh(server_id, server_user, server_password, server_port, 'hostname')),
                # 1.5 数据库基本配置
                'version': version,
                'mysql_role': mysql_role,
@@ -261,7 +341,6 @@ def get_mysql_doc_remote_win(company_name, engineer_name, customer_name, custome
     tpl.render(context)
     tpl.save(f'./{server_id}-{mysql_port}-{business_name}.docx')
 
-
 def get_mysql_doc_local_linux(company_name, engineer_name, customer_name, customer_name2, server_id, mysql_user,
                               mysql_password, mysql_port, business_name, platform):
     tpl = DocxTemplate('static/tpl/MC_MySQL_tpl.docx')
@@ -379,12 +458,6 @@ def get_mysql_doc_local_linux(company_name, engineer_name, customer_name, custom
 
     tpl.render(context)
     tpl.save(f'./{server_id}-{mysql_port}-{business_name}.docx')
-
-
-"""
-windows 本地巡检
-"""
-
 
 def get_mysql_doc_local_win(company_name, engineer_name, customer_name, customer_name2, server_id, mysql_user,
                             mysql_password, mysql_port, business_name, platform):
