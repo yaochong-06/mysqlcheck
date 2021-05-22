@@ -8,10 +8,10 @@ sys.setrecursionlimit(5000)
 block_cipher = None
 
 
-a = Analysis(['start.py','data.py','doc.py','mysqlutil.py','binlog2sql.py','binlog2sql_util.py'],
-             pathex=['/root/MyCheck'],
+a = Analysis(['start.py','data.py','doc.py'],
+             pathex=['/root/mysqlcheck'],
              binaries=[],
-             datas=[('/root/MyCheck/static','static')],
+             datas=[('/root/mysqlcheck/static','static')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
