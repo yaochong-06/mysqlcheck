@@ -9,3 +9,6 @@
 #82.156.115.176 root 123456 3308 测试库8.0 RDS
 
 #192.168.239.141 root hzmcdba 22 yao yao 33061 mariadb10 Linux
+
+192.168.239.51 root hzmcdba 22 yao yao 3305 mysql5.5 Linux
+
