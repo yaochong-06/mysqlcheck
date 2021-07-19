@@ -30,7 +30,7 @@ def get_server_info(company_name, engineer_name, customer_name, customer_name2):
             elif len(info_list) == 9 and info_list[8] == 'Windows':
                 get_mysql_doc_remote_win(company_name, engineer_name, customer_name, customer_name2, info_list[0],
                                          info_list[1], info_list[2], info_list[3], info_list[4], info_list[5],
-                                         info_list[6], info_list[7] ,info_list[8])
+                                         info_list[6], info_list[7], info_list[8])
             # RDS巡检
             elif len(info_list) == 9 and info_list[8] == 'RDS':
                 get_mysql_doc_remote_rds(company_name, engineer_name, customer_name, customer_name2, info_list[0],

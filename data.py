@@ -48,7 +48,7 @@ def get_mysql_result(server_id, server_user, server_password, server_port, mysql
             list_mysql_result_dict.append(tmp_dict)
     except Exception as re:
         print(re)
-        print(f"连接创建失败,请检查当前MySQL用户名:{mysql_user}、密码:{mysql_password}、IP:{server_id}、端口:{mysql_port}等信息是否正确")
+        print(f"连接创建失败,请检查当前MySQL用户名:{mysql_user}、密码:{mysql_password}、IP:{server_id}、端口:{mysql_port}等权限信息是否正确")
         print(f"{sql_text}...")
     finally:
         cursor.close()
@@ -79,7 +79,7 @@ def get_mysql_result_local(server_id, mysql_user, mysql_password, mysql_port, sq
             list_mysql_result_dict.append(tmp_dict)
     except Exception as re:
         print(re)
-        print(f"连接创建失败,请检查当前MySQL用户名:{mysql_user}、密码:{mysql_password}、IP:{server_id}、端口:{mysql_port}等信息是否正确")
+        print(f"连接创建失败,请检查当前MySQL用户名:{mysql_user}、密码:{mysql_password}、IP:{server_id}、端口:{mysql_port}等权限信息是否正确")
         print(f"{sql_text}...")
     finally:
         cursor.close()
@@ -140,7 +140,7 @@ def get_all(server_id, server_user, server_password, server_port, mysql_user, my
         res.sort()
     except Exception as re:
         print(re)
-        print(f"连接创建失败,请检查当前MySQL用户名:{mysql_user}、密码:{mysql_password}、IP:{server_id}、端口:{mysql_port}等信息是否正确")
+        print(f"连接创建失败,请检查当前MySQL用户名:{mysql_user}、密码:{mysql_password}、IP:{server_id}、端口:{mysql_port}等权限信息是否正确")
         print(f"{sql_text}...")
 
     finally:
@@ -161,7 +161,7 @@ def get_all_local(server_id, mysql_user, mysql_password, mysql_port, sqlfile):
         res.sort()
     except Exception as re:
         print(re)
-        print(f"连接创建失败,请检查当前MySQL用户名:{mysql_user}、密码:{mysql_password}、IP:{server_id}、端口:{mysql_port}等信息是否正确")
+        print(f"连接创建失败,请检查当前MySQL用户名:{mysql_user}、密码:{mysql_password}、IP:{server_id}、端口:{mysql_port}等权限信息是否正确")
         print(f"{sql_text}...")
 
     finally:
@@ -183,7 +183,7 @@ def get_all_nosort(server_id, server_user, server_password, server_port, mysql_u
         res = list(cursor.fetchall())
     except Exception as re:
         print(re)
-        print(f"连接创建失败,请检查当前MySQL用户名:{mysql_user}、密码:{mysql_password}、IP:{server_id}、端口:{mysql_port}等信息是否正确")
+        print(f"连接创建失败,请检查当前MySQL用户名:{mysql_user}、密码:{mysql_password}、IP:{server_id}、端口:{mysql_port}等权限信息是否正确")
         print(f"{sql_text}...")
     finally:
         # 关闭游标
@@ -204,7 +204,7 @@ def get_all_nosort_local(server_id, mysql_user, mysql_password, mysql_port, sqlf
         res = list(cursor.fetchall())
     except Exception as re:
         print(re)
-        print(f"连接创建失败,请检查当前MySQL用户名:{mysql_user}、密码:{mysql_password}、IP:{server_id}、端口:{mysql_port}等信息是否正确")
+        print(f"连接创建失败,请检查当前MySQL用户名:{mysql_user}、密码:{mysql_password}、IP:{server_id}、端口:{mysql_port}等权限信息是否正确")
         print(f"{sql_text}...")
     finally:
         # 关闭游标
@@ -225,7 +225,7 @@ def get_one(server_id, server_user, server_password, server_port, mysql_user, my
         res = cursor.fetchone()[0]
     except Exception as re:
         print(re)
-        print(f"连接创建失败,请检查当前MySQL用户名:{mysql_user}、密码:{mysql_password}、IP:{server_id}、端口:{mysql_port}等信息是否正确")
+        print(f"连接创建失败,请检查当前MySQL用户名:{mysql_user}、密码:{mysql_password}、IP:{server_id}、端口:{mysql_port}等权限信息是否正确")
         print(f"{sql_text}...")
     finally:
         # 关闭游标和连接
@@ -246,7 +246,7 @@ def get_one_local(server_id, mysql_user, mysql_password, mysql_port, sqlfile):
         res = cursor.fetchone()[0]
     except Exception as re:
         print(re)
-        print(f"连接创建失败,请检查当前MySQL用户名:{mysql_user}、密码:{mysql_password}、IP:{server_id}、端口:{mysql_port}等信息是否正确")
+        print(f"连接创建失败,请检查当前MySQL用户名:{mysql_user}、密码:{mysql_password}、IP:{server_id}、端口:{mysql_port}等权限信息是否正确")
         print(f"{sql_text}...")
     finally:
         # 关闭游标和连接
@@ -266,7 +266,7 @@ def get_user_priv(server_id, server_user, server_password, server_port, mysql_us
         rows = cursor.fetchall()
     except Exception as re:
         print(re)
-        print(f"连接创建失败,请检查当前MySQL用户名:{mysql_user}、密码:{mysql_password}、IP:{server_id}、端口:{mysql_port}等信息是否正确")
+        print(f"连接创建失败,请检查当前MySQL用户名:{mysql_user}、密码:{mysql_password}、IP:{server_id}、端口:{mysql_port}等权限信息是否正确")
         print(f"{sql_text}...")
     finally:
         cursor.close()
@@ -284,7 +284,7 @@ def get_user_priv_local(server_id, mysql_user, mysql_password, mysql_port, sql_t
         rows = cursor.fetchall()
     except Exception as re:
         print(re)
-        print(f"连接创建失败,请检查当前MySQL用户名:{mysql_user}、密码:{mysql_password}、IP:{server_id}、端口:{mysql_port}等信息是否正确")
+        print(f"连接创建失败,请检查当前MySQL用户名:{mysql_user}、密码:{mysql_password}、IP:{server_id}、端口:{mysql_port}等权限信息是否正确")
         print(f"{sql_text}...")
     finally:
         cursor.close()
