@@ -2,7 +2,7 @@
 # platform 指定Linux、Windows或RDS, Linux代表被检数据库位于Linux平台；Windows表示被检查数据库位于Windows平台；RDS只检查数据库配置，不检查系统情况
 # server_ip server_user server_password server_port mysql_user mysql_password mysql_port business_name
 
-#82.156.115.176  root Ss8866@123 22 root 123456 3306 测试库5.7 Linux
+82.156.115.176  root Ss8866@123 22 root 123456 3306 测试库5.7 Linux
 #82.156.115.176  root Ss8866@123 22 root 123456 3308 测试库8.0 RDS
 #192.168.238.172 administrator Hzmc321# 22 root Abcd321# 3307 windows测试环境 Windows
 #82.156.115.176 root 123456 3306 测试库5.7 Linux
@@ -10,5 +10,5 @@
 
 #192.168.239.141 root hzmcdba 22 yao yao 33061 mariadb10 Linux
 
-192.168.239.51 root hzmcdba 22 yao yao 3305 mysql5.5 Linux
+#192.168.239.51 root hzmcdba 22 yao yao 3305 mysql5.5 Linux
 
