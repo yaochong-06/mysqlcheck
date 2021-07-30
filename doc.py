@@ -71,6 +71,11 @@ def get_mysql_doc_remote_linux(company_name, engineer_name, customer_name, custo
                'hostname': remove_last_line(
                    login_ssh(server_id, server_user, server_password, server_port, 'hostname')),
 
+               'open_files': remove_last_line(
+                   login_ssh(server_id, server_user, server_password, server_port, """ulimit -a | grep files | awk '{print $4}'""")),
+               'max_user_processes': remove_last_line(
+                   login_ssh(server_id, server_user, server_password, server_port, """ulimit -a | grep processes | awk '{print $5}'""")),
+
                # 1.2 系统内存参数
                'os_param': os_param,
                # 1.3 系统CPU参数
@@ -178,6 +183,13 @@ def get_mysql_doc_remote_rds(company_name, engineer_name, customer_name, custome
                    login_ssh(server_id, server_user, server_password, server_port, 'cat /etc/redhat-release')),
                'hostname': remove_last_line(
                    login_ssh(server_id, server_user, server_password, server_port, 'hostname')),
+               'open_files': remove_last_line(
+                   login_ssh(server_id, server_user, server_password, server_port,
+                             """ulimit -a | grep files | awk '{print $4}'""")),
+               'max_user_processes': remove_last_line(
+                   login_ssh(server_id, server_user, server_password, server_port,
+                             """ulimit -a | grep processes | awk '{print $5}'""")),
+
                # 1.5 数据库基本配置
                'version': version,
                'mysql_role': mysql_role,
@@ -392,6 +404,8 @@ def get_mysql_doc_local_linux(company_name, engineer_name, customer_name, custom
                # 1.1 系统基础信息
                'release': remove_last_line(command_local('cat /etc/redhat-release')),
                'hostname': remove_last_line(command_local('hostname')),
+               'open_files': remove_last_line(command_local("""ulimit -a | grep files | awk '{print $4}'""")),
+               'max_user_processes': remove_last_line(command_local("""ulimit -a | grep processes | awk '{print $5}'""")),
 
                # 'hostname':command_local("hostname").replace("\n",""),
 
