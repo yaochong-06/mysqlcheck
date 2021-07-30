@@ -89,6 +89,9 @@ def get_mysql_doc_remote_linux(company_name, engineer_name, customer_name, custo
                # CPU 主频
                'cpu_clock_speed': remove_last_line(command(server_id, server_user, server_password, server_port,
                                                            "cat /proc/cpuinfo | grep MHz | uniq | awk -F: '{print $2}'")),
+               # watchdog
+               'watchdog': remove_last_line(command(server_id,server_user,server_password,server_port,"ps -ef | grep watchdogd | grep -v grep | wc -l")),
+
                # 1.4 系统磁盘空间使用
                'space_param': space_param,
 
@@ -406,6 +409,9 @@ def get_mysql_doc_local_linux(company_name, engineer_name, customer_name, custom
                # CPU 主频
                'cpu_clock_speed': remove_last_line(
                    command_local("cat /proc/cpuinfo | grep MHz | uniq | awk -F: '{print $2}'")),
+               # watchdog
+               'watchdog': remove_last_line(command_local("ps -ef | grep watchdogd | grep -v grep | wc -l")),
+
                # 1.4 系统磁盘空间使用
                'space_param': space_param,
 
@@ -528,6 +534,9 @@ def get_mysql_doc_local_win(company_name, engineer_name, customer_name, customer
                # CPU 主频
                'cpu_clock_speed': remove_last_line(
                    command_local("cat /proc/cpuinfo | grep MHz | uniq | awk -F: '{print $2}'")),
+               # watchdog
+               'watchdog': remove_last_line(command_local("ps -ef | grep watchdogd | grep -v grep | wc -l")),
+
                # 1.4 系统磁盘空间使用
                'space_param': space_param,
 
