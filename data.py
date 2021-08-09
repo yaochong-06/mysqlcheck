@@ -5,7 +5,7 @@
 # @FileName: data.py
 # @Software: PyCharm
 # @Blog    ：https://github.com/yaochong-06/ ; http://blog.itpub.net/29990276
-import os, time, paramiko, pymysql
+import os, time, paramiko, pymysql, redis
 
 
 def get_sqltext(filename):
