@@ -8,6 +8,10 @@
 import os, time, paramiko, pymysql, redis
 
 
+# 获得redis脚本执行结果
+
+
+
 def get_sqltext(filename):
     try:
         file_f = open('static/sqlfile/MySQL/' + filename + '.sql', 'r', encoding='utf-8')
@@ -292,7 +296,8 @@ def get_user_priv_local(server_id, mysql_user, mysql_password, mysql_port, sql_t
         return rows
 
 
-def get_info_55_56(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port, platform):
+def get_info_55_56(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port,
+                   platform):
     # mysql参数
     info_mysql = get_all(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port,
                          "info_mysql_56")
@@ -331,8 +336,8 @@ def get_info_55_56(server_id, server_user, server_password, server_port, mysql_u
     memory_set = get_all(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port,
                          "memory_set_56")
     query_cache_type = \
-    get_all(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port,
-            "query_cache_type_56")[0]
+        get_all(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port,
+                "query_cache_type_56")[0]
     memory_set.append(query_cache_type)
     memory_set = [(c[0].lower(), c[1]) for c in memory_set]
 
@@ -352,8 +357,9 @@ def get_info_55_56(server_id, server_user, server_password, server_port, mysql_u
             if dir[1] != '' and platform == 'Linux':
                 size = command(server_id, server_user, server_password, server_port,
                                "du -sh %s|awk '{print $1}'" % dir[1]).replace("\n", "")
-            elif dir[1] !='' and platform == 'Windows':
-                size = command(server_id, server_user, server_password, server_port, 'cd %s && dir /w  | findstr "文件"' % dir[1]).replace("\n", "").replace(" ", "")
+            elif dir[1] != '' and platform == 'Windows':
+                size = command(server_id, server_user, server_password, server_port,
+                               'cd %s && dir /w  | findstr "文件"' % dir[1]).replace("\n", "").replace(" ", "")
             else:
                 size = 0
             dir.append(size)
@@ -396,8 +402,9 @@ def get_info_55_56(server_id, server_user, server_password, server_port, mysql_u
             if dir[1] != '' and platform == 'Linux':
                 size = command(server_id, server_user, server_password, server_port,
                                "du -sh %s|awk '{print $1}'" % dir[1]).replace("\n", "")
-            elif dir[1] !='' and platform == 'Windows':
-                size = command(server_id, server_user, server_password, server_port, 'cd %s && dir /w  | findstr "文件"' % dir[1]).replace("\n", "").replace(" ", "")
+            elif dir[1] != '' and platform == 'Windows':
+                size = command(server_id, server_user, server_password, server_port,
+                               'cd %s && dir /w  | findstr "文件"' % dir[1]).replace("\n", "").replace(" ", "")
             else:
                 size = 0
             dir.append(size)
@@ -521,7 +528,6 @@ def get_info_55_56(server_id, server_user, server_password, server_port, mysql_u
     all_priv = get_all(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port,
                        "all_priv_56")
 
-
     all_priv = [('用户名', '访问终端', '权限可传递', '密码过期')] + all_priv
 
     super_priv = get_all(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port,
@@ -554,7 +560,6 @@ def get_info_55_56(server_id, server_user, server_password, server_port, mysql_u
     repl_status = get_mysql_result(server_id, server_user, server_password, server_port, mysql_user, mysql_password,
                                    mysql_port, "repl_status_56")
 
-
     # 数据库错误日志检查
 
     check_log = get_one(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port,
@@ -566,7 +571,6 @@ def get_info_55_56(server_id, server_user, server_password, server_port, mysql_u
     else:
         log_err = get_one(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port,
                           "log_err2_56")
-
 
     if log_err != 'NULL':
         date_time = time.strftime("%Y-%m-%d", time.localtime(time.time() - 60 * 60 * 24 * 30))
@@ -588,7 +592,8 @@ def get_info_55_56(server_id, server_user, server_password, server_port, mysql_u
            user_grant_privs, all_priv, super_priv, repl_priv, big_tables, big_index, have_no_primary_key, gather_info, repl_setting, repl_status, err, log_err, share_set, tablespace_info
 
 
-def get_info_57_80(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port, platform):
+def get_info_57_80(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port,
+                   platform):
     # mysql参数
     # skip_name_resolve 建议开启
     info_mysql = get_all(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port,
@@ -611,8 +616,8 @@ def get_info_57_80(server_id, server_user, server_password, server_port, mysql_u
     sessions_res = get_all(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port,
                            "sessions_res_80")
     max_connections_time = \
-    get_all(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port,
-            "max_connections_time_57_80")[0]
+        get_all(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port,
+                "max_connections_time_57_80")[0]
 
     sessions = []
     for s in sessions_res:
@@ -649,8 +654,9 @@ def get_info_57_80(server_id, server_user, server_password, server_port, mysql_u
             if dir[1] != '' and platform == 'Linux':
                 size = command(server_id, server_user, server_password, server_port,
                                "du -sh %s|awk '{print $1}'" % dir[1]).replace("\n", "")
-            elif dir[1] !='' and platform == 'Windows':
-                size = command(server_id, server_user, server_password, server_port, 'cd %s && dir /w  | findstr "文件"' % dir[1]).replace("\n", "").replace(" ", "")
+            elif dir[1] != '' and platform == 'Windows':
+                size = command(server_id, server_user, server_password, server_port,
+                               'cd %s && dir /w  | findstr "文件"' % dir[1]).replace("\n", "").replace(" ", "")
             else:
                 size = 0
             dir.append(size)
@@ -692,8 +698,9 @@ def get_info_57_80(server_id, server_user, server_password, server_port, mysql_u
             if dir[1] != '' and platform == 'Linux':
                 size = command(server_id, server_user, server_password, server_port,
                                "du -sh %s|awk '{print $1}'" % dir[1]).replace("\n", "")
-            elif dir[1] !='' and platform == 'Windows':
-                size = command(server_id, server_user, server_password, server_port, 'cd %s && dir /w  | findstr "文件"' % dir[1]).replace("\n", "").replace(" ", "")
+            elif dir[1] != '' and platform == 'Windows':
+                size = command(server_id, server_user, server_password, server_port,
+                               'cd %s && dir /w  | findstr "文件"' % dir[1]).replace("\n", "").replace(" ", "")
             else:
                 size = 0
             dir.append(size)
@@ -926,9 +933,9 @@ def get_info_55_56_local(server_id, mysql_user, mysql_password, mysql_port, plat
         for dir in dirs:
             dir = list(dir)
             size = ''
-            if dir[1] != '' and platform =='Linux':
+            if dir[1] != '' and platform == 'Linux':
                 size = command_local("du -sh %s|awk '{print $1}'" % dir[1]).replace("\n", "")
-            elif dir[1] !='' and platform == 'Windows':
+            elif dir[1] != '' and platform == 'Windows':
                 size = command_local('cd %s && dir /w  | findstr "文件"' % dir[1]).replace("\n", "").replace(" ", "")
             else:
                 size = 0
@@ -1140,7 +1147,7 @@ def get_info_57_80_local(server_id, mysql_user, mysql_password, mysql_port, plat
     # 连接数
     sessions_res = get_all_local(server_id, mysql_user, mysql_password, mysql_port, "sessions_res_80")
     max_connections_time = \
-    get_all_local(server_id, mysql_user, mysql_password, mysql_port, "max_connections_time_57_80")[0]
+        get_all_local(server_id, mysql_user, mysql_password, mysql_port, "max_connections_time_57_80")[0]
 
     sessions = []
     for s in sessions_res:
@@ -1172,7 +1179,7 @@ def get_info_57_80_local(server_id, mysql_user, mysql_password, mysql_port, plat
             size = ''
             if dir[1] != '' and platform == 'Linux':
                 size = command_local("du -sh %s|awk '{print $1}'" % dir[1]).replace("\n", "")
-            elif dir[1] !='' and platform == 'Windows':
+            elif dir[1] != '' and platform == 'Windows':
                 size = command('cd %s && dir /w  | findstr "文件"' % dir[1]).replace("\n", "").replace(" ", "")
             else:
                 size = 0
