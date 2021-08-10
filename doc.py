@@ -30,7 +30,7 @@ def get_mysql_doc_linux(company_name, engineer_name, customer_name, customer_nam
             info_mysql, lang_set, mysql_role, sessions, memory_set, net_set, get_dirs, get_db_dirs, binlog, bin_dir, bin_set, bin_cache, \
             redolog, redo_set, redo_size, undofile, null_user, bin_log, redo_log, general_log, slow_log, \
             user_grant_privs, all_priv, super_priv, repl_priv, big_tables, big_index, have_no_primary_key, gather_info, repl_setting, repl_status, err, log_err, \
-            share_set, tablespace_info = get_info_55_56_local(args[0], args[1], args[2],args[3], args[5])
+            share_set, tablespace_info = get_info_55_56_local(args[0], args[1], args[2], args[3], args[5])
         elif version[0:3] in ['5.7', '8.0', '10.']:
             info_mysql, lang_set, mysql_role, sessions, memory_set, net_set, get_dirs, get_db_dirs, binlog, bin_dir, bin_set, bin_cache, \
             redolog, redo_set, redo_size, undofile, null_user, bin_log, redo_log, general_log, slow_log, \
@@ -219,9 +219,11 @@ def get_mysql_doc_linux(company_name, engineer_name, customer_name, customer_nam
                                "grep 'core id' /proc/cpuinfo | sort -u | wc -l")),
                    # CPU 主频
                    'cpu_clock_speed': remove_last_line(
-                       command(args[0], args[6], args[7], args[8], "cat /proc/cpuinfo | grep MHz | uniq | awk -F: '{print $2}'")),
+                       command(args[0], args[6], args[7], args[8],
+                               "cat /proc/cpuinfo | grep MHz | uniq | awk -F: '{print $2}'")),
                    # watchdog
-                   'watchdog': remove_last_line(command(args[0], args[6], args[7], args[8], "ps -ef | grep watchdogd | grep -v grep | wc -l")),
+                   'watchdog': remove_last_line(
+                       command(args[0], args[6], args[7], args[8], "ps -ef | grep watchdogd | grep -v grep | wc -l")),
 
                    # 1.4 系统磁盘空间使用
                    'space_param': space_param,
