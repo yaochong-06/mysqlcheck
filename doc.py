@@ -22,22 +22,20 @@ def get_mysql_doc_linux(company_name, engineer_name, customer_name, customer_nam
     # server_id, mysql_user, mysql_password, mysql_port, business_name, platform
     tpl = DocxTemplate('static/tpl/MC_MySQL_tpl.docx')
 
-    print(f"正在巡检{list(*args)[4]}系统, 请耐心等待...")
+    print(f"正在巡检{args[4]}系统, 请耐心等待...")
 
-    if len(list(*args)) == 6:
-        version = get_one_local(list(*args[0]), list(*args[1]), list(*args[2]), list(*args[3]), "version")
+    if len(args) == 6:
+        version = get_one_local(args[0], args[1], args[2], args[3], "version")
         if version[0:3] in ['5.5', '5.6']:
             info_mysql, lang_set, mysql_role, sessions, memory_set, net_set, get_dirs, get_db_dirs, binlog, bin_dir, bin_set, bin_cache, \
             redolog, redo_set, redo_size, undofile, null_user, bin_log, redo_log, general_log, slow_log, \
             user_grant_privs, all_priv, super_priv, repl_priv, big_tables, big_index, have_no_primary_key, gather_info, repl_setting, repl_status, err, log_err, \
-            share_set, tablespace_info = get_info_55_56_local(list(*args[0]), list(*args[1]), list(*args[2]),
-                                                              list(*args[3]), list(*args[5]))
+            share_set, tablespace_info = get_info_55_56_local(args[0], args[1], args[2],args[3], args[5])
         elif version[0:3] in ['5.7', '8.0', '10.']:
             info_mysql, lang_set, mysql_role, sessions, memory_set, net_set, get_dirs, get_db_dirs, binlog, bin_dir, bin_set, bin_cache, \
             redolog, redo_set, redo_size, undofile, null_user, bin_log, redo_log, general_log, slow_log, \
             user_grant_privs, all_priv, super_priv, repl_priv, big_tables, big_index, have_no_primary_key, gather_info, repl_setting, repl_status, err, log_err, \
-            share_set, tablespace_info = get_info_57_80_local(list(*args[0]), list(*args[1]), list(*args[2]),
-                                                              list(*args[3]), list(*args[5]))
+            share_set, tablespace_info = get_info_57_80_local(args[0], args[1], args[2], args[3], args[5])
         else:
             print("The version is not support.")
         os_set = command_local("cat /proc/meminfo |grep -E 'Mem|Cache|Swap|Huge'").replace(":", "").replace("kB",
@@ -63,7 +61,7 @@ def get_mysql_doc_linux(company_name, engineer_name, customer_name, customer_nam
 
         context = {'company_name': company_name,
                    'engineer_name': engineer_name,
-                   'business_name': list(*args)[4],
+                   'business_name': args[4],
                    'c_name': customer_name,
                    'c_name2': customer_name2,
                    'check_time': check_time,
@@ -145,24 +143,24 @@ def get_mysql_doc_linux(company_name, engineer_name, customer_name, customer_nam
                    'tablespace_info': tablespace_info,
                    }
 
-    elif len(list(*args)) == 9:
-        version = get_one(list(*args)[0], list(*args)[6], list(*args)[7], list(*args)[8], list(*args)[1],
-                          list(*args)[2], list(*args)[3], "version")
+    elif len(args) == 9:
+        version = get_one(args[0], args[6], args[7], args[8], args[1],
+                          args[2], args[3], "version")
         if version[0:3] in ['5.5', '5.6', '10.']:
             info_mysql, lang_set, mysql_role, sessions, memory_set, net_set, get_dirs, get_db_dirs, binlog, bin_dir, bin_set, bin_cache, \
             redolog, redo_set, redo_size, undofile, null_user, bin_log, redo_log, general_log, slow_log, \
             user_grant_privs, all_priv, super_priv, repl_priv, big_tables, big_index, have_no_primary_key, gather_info, repl_setting, repl_status, err, log_err, \
-            share_set, tablespace_info = get_info_55_56(list(*args)[0], list(*args)[6], list(*args)[7], list(*args)[8],
-                                                        list(*args)[1], list(*args)[2], list(*args)[3], list(*args)[5])
+            share_set, tablespace_info = get_info_55_56(args[0], args[6], args[7], args[8],
+                                                        args[1], args[2], args[3], args[5])
         elif version[0:3] in ['5.7', '8.0']:
             info_mysql, lang_set, mysql_role, sessions, memory_set, net_set, get_dirs, get_db_dirs, binlog, bin_dir, bin_set, bin_cache, \
             redolog, redo_set, redo_size, undofile, null_user, bin_log, redo_log, general_log, slow_log, \
             user_grant_privs, all_priv, super_priv, repl_priv, big_tables, big_index, have_no_primary_key, gather_info, repl_setting, repl_status, err, log_err, \
-            share_set, tablespace_info = get_info_57_80(list(*args)[0], list(*args)[6], list(*args)[7], list(*args)[8],
-                                                        list(*args)[1], list(*args)[2], list(*args)[3], list(*args)[5])
+            share_set, tablespace_info = get_info_57_80(args[0], args[6], args[7], args[8],
+                                                        args[1], args[2], args[3], args[5])
         else:
             print("The version is not support.")
-        os_set = command(list(*args)[0], list(*args)[6], list(*args)[7], list(*args)[8],
+        os_set = command(args[0], args[6], args[7], args[8],
                          "cat /proc/meminfo |grep -E 'Mem|Cache|Swap|Huge'").replace(":", "").replace("kB", "").split(
             '\n')
         os_param = []
@@ -174,7 +172,7 @@ def get_mysql_doc_linux(company_name, engineer_name, customer_name, customer_nam
 
         # 1.2 系统磁盘空间使用
         # server_id, mysql_user, mysql_password, mysql_port, business_name, platform, server_user,server_password, server_port,
-        fs_set = command(list(*args)[0], list(*args)[6], list(*args)[7], list(*args)[8], "df -hP").split('\n')
+        fs_set = command(args[0], args[6], args[7], args[8], "df -hP").split('\n')
         space_param = []
         for space in fs_set[1:]:
             space_tmp = space.split(' ')
@@ -187,45 +185,43 @@ def get_mysql_doc_linux(company_name, engineer_name, customer_name, customer_nam
 
         context = {'company_name': company_name,
                    'engineer_name': engineer_name,
-                   'business_name': list(*args)[4],
+                   'business_name': args[4],
                    'c_name': customer_name,
                    'c_name2': customer_name2,
                    'check_time': check_time,
                    # 1.1 系统基础信息
                    'release': remove_last_line(
-                       login_ssh(list(*args)[0], list(*args)[6], list(*args)[7], list(*args)[8],
+                       login_ssh(args[0], args[6], args[7], args[8],
                                  'cat /etc/redhat-release')),
                    'hostname': remove_last_line(
-                       login_ssh(list(*args)[0], list(*args)[6], list(*args)[7], list(*args)[8], 'hostname')),
+                       login_ssh(args[0], args[6], args[7], args[8], 'hostname')),
                    'open_files': remove_last_line(
-                       login_ssh(list(*args)[0], list(*args)[6], list(*args)[7], list(*args)[8],
+                       login_ssh(args[0], args[6], args[7], args[8],
                                  """ulimit -a | grep files | awk '{print $4}'""")),
                    'max_user_processes': remove_last_line(
-                       login_ssh(list(*args)[0], list(*args)[6], list(*args)[7], list(*args)[8],
+                       login_ssh(args[0], args[6], args[7], args[8],
                                  """ulimit -a | grep processes | awk '{print $5}'""")),
                    # 1.2 系统内存参数
                    'os_param': os_param,
                    # 1.3 系统CPU参数
                    # 物理CPU个数
-                   'p_cpu_num': remove_last_line(command(list(*args)[0], list(*args)[6], list(*args)[7], list(*args)[8],
+                   'p_cpu_num': remove_last_line(command(args[0], args[6], args[7], args[8],
                                                          "cat /proc/cpuinfo |grep 'physical id'|sort |uniq|wc -l")),
                    # 逻辑CPU个数
-                   'l_cpu_num': remove_last_line(command(list(*args)[0], list(*args)[6], list(*args)[7], list(*args)[8],
+                   'l_cpu_num': remove_last_line(command(args[0], args[6], args[7], args[8],
                                                          "cat /proc/cpuinfo |grep 'processor'|wc -l")),
                    # CPU核心数
-                   'cpu_cores': remove_last_line(command(list(*args)[0], list(*args)[6], list(*args)[7], list(*args)[8],
+                   'cpu_cores': remove_last_line(command(args[0], args[6], args[7], args[8],
                                                          "cat /proc/cpuinfo |grep 'cores'|uniq|awk '{print $4}'")),
                    # 每个物理CPU的核数
                    'core_per_p': remove_last_line(
-                       command(list(*args)[0], list(*args)[6], list(*args)[7], list(*args)[8],
+                       command(args[0], args[6], args[7], args[8],
                                "grep 'core id' /proc/cpuinfo | sort -u | wc -l")),
                    # CPU 主频
                    'cpu_clock_speed': remove_last_line(
-                       command(list(*args)[0], list(*args)[6], list(*args)[7], list(*args)[8],
-                               "cat /proc/cpuinfo | grep MHz | uniq | awk -F: '{print $2}'")),
+                       command(args[0], args[6], args[7], args[8], "cat /proc/cpuinfo | grep MHz | uniq | awk -F: '{print $2}'")),
                    # watchdog
-                   'watchdog': remove_last_line(command(list(*args)[0], list(*args)[6], list(*args)[7], list(*args)[8],
-                                                        "ps -ef | grep watchdogd | grep -v grep | wc -l")),
+                   'watchdog': remove_last_line(command(args[0], args[6], args[7], args[8], "ps -ef | grep watchdogd | grep -v grep | wc -l")),
 
                    # 1.4 系统磁盘空间使用
                    'space_param': space_param,
@@ -278,7 +274,7 @@ def get_mysql_doc_linux(company_name, engineer_name, customer_name, customer_nam
                    }
 
     tpl.render(context)
-    tpl.save(f'./{list(*args)[0]}-{list(*args)[3]}-{list(*args)[4]}.docx')
+    tpl.save(f'./{args[0]}-{args[3]}-{args[4]}.docx')
 
 
 def get_mysql_doc_remote_rds(company_name, engineer_name, customer_name, customer_name2, server_id, server_user,

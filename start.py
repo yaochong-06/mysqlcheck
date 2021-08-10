@@ -23,15 +23,15 @@ def get_server_info(company_name, engineer_name, customer_name, customer_name2):
 
             # Linux平台远程
             if len(info_list) == 9 and info_list[5] == 'Linux':
-                get_mysql_doc_linux(company_name, engineer_name, customer_name, customer_name2, (info_list[0],
-                                                                                                 info_list[1],
-                                                                                                 info_list[2],
-                                                                                                 info_list[3],
-                                                                                                 info_list[4],
-                                                                                                 info_list[5],
-                                                                                                 info_list[6],
-                                                                                                 info_list[7],
-                                                                                                 info_list[8]))
+                get_mysql_doc_linux(company_name, engineer_name, customer_name, customer_name2, info_list[0],
+                                    info_list[1],
+                                    info_list[2],
+                                    info_list[3],
+                                    info_list[4],
+                                    info_list[5],
+                                    info_list[6],
+                                    info_list[7],
+                                    info_list[8])
             # Windows平台远程
             elif len(info_list) == 9 and info_list[8] == 'Windows':
                 get_mysql_doc_remote_win(company_name, engineer_name, customer_name, customer_name2, info_list[0],
@@ -44,12 +44,12 @@ def get_server_info(company_name, engineer_name, customer_name, customer_name2):
                                          info_list[6], info_list[7], info_list[8])
             # Linux平台本地
             elif len(info_list) == 6 and info_list[5] == 'Linux':
-                get_mysql_doc_linux(company_name, engineer_name, customer_name, customer_name2, (info_list[0],
-                                                                                                 info_list[1],
-                                                                                                 info_list[2],
-                                                                                                 info_list[3],
-                                                                                                 info_list[4],
-                                                                                                 info_list[5]))
+                get_mysql_doc_linux(company_name, engineer_name, customer_name, customer_name2, info_list[0],
+                                    info_list[1],
+                                    info_list[2],
+                                    info_list[3],
+                                    info_list[4],
+                                    info_list[5])
             # windows本地
             elif len(info_list) == 6 and info_list[5] == 'Windows':
                 get_mysql_doc_local_win(company_name, engineer_name, customer_name, customer_name2, info_list[0],
