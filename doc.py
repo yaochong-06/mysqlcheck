@@ -145,9 +145,6 @@ def get_mysql_doc_linux(company_name, engineer_name, customer_name, customer_nam
                    'tablespace_info': tablespace_info,
                    }
 
-        tpl.render(context)
-        tpl.save(f'./{list(*args)[0]}-{list(*args)[3]}-{list(*args)[4]}.docx')
-
     elif len(list(*args)) == 9:
         version = get_one(list(*args)[0], list(*args)[6], list(*args)[7], list(*args)[8], list(*args)[1],
                           list(*args)[2], list(*args)[3], "version")
@@ -280,8 +277,8 @@ def get_mysql_doc_linux(company_name, engineer_name, customer_name, customer_nam
                    'tablespace_info': tablespace_info,
                    }
 
-        tpl.render(context)
-        tpl.save(f'./{list(*args)[0]}-{list(*args)[3]}-{list(*args)[4]}.docx')
+    tpl.render(context)
+    tpl.save(f'./{list(*args)[0]}-{list(*args)[3]}-{list(*args)[4]}.docx')
 
 
 def get_mysql_doc_remote_rds(company_name, engineer_name, customer_name, customer_name2, server_id, server_user,
