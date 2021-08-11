@@ -524,7 +524,7 @@ def get_info_55_56(server_id, server_user, server_password, server_port, mysql_u
 
     # 若有输出，提示：用户名密码相同，建议重新设置密码，提高用户安全级别！
     '''
-    # 权限管理
+    # 6.2 权限管理
     all_priv = get_all(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port,
                        "all_priv_56")
 
@@ -819,7 +819,7 @@ def get_info_57_80(server_id, server_user, server_password, server_port, mysql_u
 
     # 若有输出，提示：用户名密码相同，建议重新设置密码，提高用户安全级别！
     '''
-    # 权限管理
+    # 6.2 权限管理
     all_priv = get_all(server_id, server_user, server_password, server_port, mysql_user, mysql_password, mysql_port,
                        "all_priv_57_80")
     all_priv = [('用户名', '访问终端', '权限可传递', '密码过期', '用户锁定')] + all_priv
